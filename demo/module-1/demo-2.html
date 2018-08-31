@@ -14,18 +14,14 @@
 			if (window.getXmlHttpRequest) {
 				try {
 					return new XMLHttpRequest();
-				}
-				catch (e) {}
-			}
-			else if (window.ActiveXObject) {
+				} catch (e) {}
+			} else if (window.ActiveXObject) {
 				try {
 					return new ActiveXObject("Msxml2.XMLHTTP");
-				}
-				catch (e) {}
+				} catch (e) {}
 				try {
 					return new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				catch (e) {}
+				} catch (e) {}
 			}
 			return null;
 		}
@@ -34,41 +30,57 @@
 		var url = "gettime.php?delay=3"; // Задержка в запросе:  gettime.php?delay=3
 		var request;
 
+		request = getXmlHttpRequest();
+
 
 		// Синхронный запрос
 		function showSyncRequest() {
-			console.log(1);
-			// Запрос
-			request = getXmlHttpRequest();
-			request.open("GET", url, false);
+			request.open('GET', url, false);
 			request.send(null);
+
 			let result = document.getElementById('syncResult');
 			result.firstChild.nodeValue = request.responseText;
-
-			// Вывод ответа
 
 		}
 
 		// Асинхронный запрос
 		function showAsyncRequest() {
 			// Запрос
-
-			request = getXmlHttpRequest();
 			request.open('GET', url, true);
 			request.send(null);
+
+			// check the ready state of the request 
 			request.onreadystatechange = showAsyncRequestComplete;
-			console.log(request.readyState);
+			// request.onreadystatechange = ui;
+
 
 		}
 
-		// Завершение асинхронного запроса
-		function showAsyncRequestComplete() {
-			if (request.readyState === 4) {
+		let result = document.getElementById('asyncResult');
+
+		function ui() {
+			let result = document.getElementById('asyncResult');
+			
+		}
+
+			// Завершение асинхронного запроса
+			function showAsyncRequestComplete() {
 				let result = document.getElementById('asyncResult');
-				result.firstChild.nodeValue = request.responseText;
-				console.log(request.readyState);
+				
+				// if (request.readyState == 3) {
+				  
+				// 	result.style.background = 'red';
+				// 	console.log(request.readyState);
+				// }
+
+				if (request.readyState == 4) {
+					result.firstChild.nodeValue = request.responseText;
+					result.style.background = 'green';
+				}
 			}
-		}
+
+
+	
 	</script>
 </head>
 
