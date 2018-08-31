@@ -6,25 +6,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Language" content="ru" />
 	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="../../xmlhttprequest.js"></script>
 	<script type="text/javascript">
 		// URL сценария, возвращающего время
 
 
-		function getXmlHttpRequest() {
-			if (window.getXmlHttpRequest) {
-				try {
-					return new XMLHttpRequest();
-				} catch (e) {}
-			} else if (window.ActiveXObject) {
-				try {
-					return new ActiveXObject("Msxml2.XMLHTTP");
-				} catch (e) {}
-				try {
-					return new ActiveXObject("Microsoft.XMLHTTP");
-				} catch (e) {}
-			}
-			return null;
 		}
+		
 
 
 		var url = "gettime.php?delay=3"; // Задержка в запросе:  gettime.php?delay=3
@@ -52,35 +40,39 @@
 			// check the ready state of the request 
 			request.onreadystatechange = showAsyncRequestComplete;
 			// request.onreadystatechange = ui;
+			let result = document.getElementById('asyncResult');
 
+			// result.setAttribute('style', 'background: green; transition: all .3s; color: #fff;');
+			result.animate([
+				// keyframes
+				{
+					background: 'red'
+				},
+				{
+					background: 'orange'
+				}
+			], {
+				// timing options
+				duration: 1000,
+				iterations: Infinity
+			});
+
+		}
+
+
+		function ui() {
 
 		}
 
 		let result = document.getElementById('asyncResult');
-
-		function ui() {
+		// Завершение асинхронного запроса
+		function showAsyncRequestComplete() {
 			let result = document.getElementById('asyncResult');
-			
-		}
-
-			// Завершение асинхронного запроса
-			function showAsyncRequestComplete() {
-				let result = document.getElementById('asyncResult');
-				
-				// if (request.readyState == 3) {
-				  
-				// 	result.style.background = 'red';
-				// 	console.log(request.readyState);
-				// }
-
-				if (request.readyState == 4) {
-					result.firstChild.nodeValue = request.responseText;
-					result.style.background = 'green';
-				}
+			if (request.readyState == 4) {
+				result.firstChild.nodeValue = request.responseText;
 			}
 
-
-	
+		}
 	</script>
 </head>
 
