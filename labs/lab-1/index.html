@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<title>Лабораторная работа 1</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="ru" />
+	<!--
+		**
+		**	Задание 1. Создание объекта XmlHttpRequest
+		**		
+	-->
+	<script type="text/javascript" src="../../xmlhttprequest.js"></script>
+
+
+	<script type="text/javascript">
+
+		/*
+		 **
+		 **	Задание 2. Выборка книги 
+		 **
+		 */
+
+		function getBookByNumber() {
+			let num = document.getElementById('txtNum').value;
+			let url = `getbooktxt.php?num=${num}`;
+			let req = getXmlHttpRequest();
+
+			req.open('GET', url, true);
+			req.send(null);
+
+			req.onreadystatechange = () => {
+				if (req.readyState == 4) {
+					if(req.status == 200){
+						let div = document.getElementById('divResult');
+						div.firstChild.nodeValue = req.responseText;
+						console.log(req.readyState + '\n' + num + '\n' + req.status);
+					} else {
+						alert('Sorry out database is under maintanence');
+					}
+				}
+			}
+		}
+
+		/*
+		 **
+		 **	Задание 3. Обработчик кнопки
+		 **
+		 */
+
+		function showBook() {
+			getBookByNumber();
+		}
+	</script>
+</head>
+
+<body>
+	<h1>Лабораторная работа 1</h1>
+	<form action="#" onsubmit="return false">
+		<label for="txtNum">Введите номер книги:</label>
+		<input id="txtNum" type="text" />
+		<button onclick="showBook('books.txt')">Поиск</button>
+	</form>
+	<div id="divResult">&nbsp;</div>
+</body>
+
+</html>
