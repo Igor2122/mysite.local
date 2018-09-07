@@ -1,0 +1,41 @@
+200 - OK 
+****** ------ ******
+301
+302 send the request to server again 
+Location: ... place where this place is now where to request for it again 
+for example to google.com verify you are human or something of this kind
+304 - used by crawlers to check if the file was changed if not 
+response is 304 - Not Modifiied
+****** ------ ******
+400 + all report for errors 
+400 - Bad Resuest 
+401 - Need Authorization 
+403 - Forbidden - forbidden direct access
+404 - Not Found
+405 - Method Not Allowed
+****** ------ ******
+500 + server errors
+500 - internal error, means someone eddited server configurations
+
+
+<form action="file.php" method="GET"> get is always a default method 
+		<input name="login" type="text" />
+		<input name="pass" type="text" />
+		<input type="submit" />
+	</form>
+
+  requst will look like this: 
+inputs will be converted to queryString: login=John&pass=1234
+
+
+GET /file.php?login=John&pass=1234
+
+to remove chaching we need to create a file .htaccess
+
+# .htaccess
+Header set Cache-Control "no-store, no-cache, max-age=0"
+no-store - will prevcent caching 100%
+no-cache -will prevent caching when the browser window closes only works when the session opnes and closses
+max-age=0 - time of info to be actual 
+
+HEAD is the same as GET only the server on HEAD request replies only with head without body like with GET 
